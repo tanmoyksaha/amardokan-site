@@ -24,7 +24,7 @@
         <div class="col-lg-3 col-md-3 col-6">
             <div class="single_banner">
                 <div class="">
-                    <a href="{{ url('campaign/Seller Campaign') }}"><img src="{{ env('SITE_URL').'assets/promo_banner/promoBanner4.jpg'  }}" class="border rounded shadow-sm lazy img-fluid" alt=""></a> 
+                    <a href="{{ url('all/products') }}"><img src="{{ env('SITE_URL').'assets/promo_banner/promoBanner4.jpg'  }}" class="border rounded shadow-sm lazy img-fluid" alt=""></a> 
                 </div>
             </div>
         </div>

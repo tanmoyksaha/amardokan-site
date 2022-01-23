@@ -54,6 +54,8 @@ Route::post('/shop/search/campaign',[SearchController::class,'ShopSearchCampaign
 //campaign
 Route::get('/campaign/{campaignName}',[CampaignController::class,'index'])->name('campaignById');
 Route::get('/campaign/shop/{shopId}/{campaignName}',[CampaignController::class,'shopView'])->name('shopView.campaign');
+Route::get('/all/products',[CampaignController::class,'allProducts'])->name('all.products');
+Route::get('/all/products/shop/{shopId}',[CampaignController::class,'shopAllProducts'])->name('all.products.shops');
 
 
 //sell on amardokan

@@ -49,4 +49,50 @@ class CampaignController extends Controller
         $products=DB::select($sql);
         return view('campaign.shopView',compact('shopId','products','campaignName'));
     }
+
+    public function allProducts(){
+        # code...
+        $sql="SELECT store_products.id as store_p_id,
+                products.id as product_id, 
+                store_products.sale_price,
+                store_products.abl_com_amnt,
+                store_products.stock,
+                store_products.store_enlist,
+                products.title as product_name,
+                products.unit_mrp,
+                products.status as product_status 
+            
+            FROM `store_products`,products 
+            where products.status='active' and 
+            store_products.store_enlist=1 and 
+            store_products.prod_id=products.id
+            
+            GROUP BY product_id";
+        
+        $products=DB::select($sql);
+        return view('allProducts.index',compact('products'));
+    }
+    public function shopAllProducts($shopId){
+        # code...
+        $sql="select shop_name from user_seller where id=".$shopId;
+        $shopName=DB::select($sql);
+        $sql="SELECT store_products.id as store_p_id,
+            products.id as product_id, 
+            store_products.sale_price,
+            store_products.abl_com_amnt,
+            store_products.stock,
+            store_products.store_enlist,
+            products.title as product_name,
+            products.unit_mrp,
+            products.status as product_status 
+        
+        FROM `store_products`,products 
+        where products.status='active' and 
+        store_products.store_enlist=1 and 
+        store_products.prod_id=products.id and 
+        store_products.store_id='".$shopId."'";
+        
+        $products=DB::select($sql);
+        return view('allProducts.index',compact('shopName','products'));
+    }
 }

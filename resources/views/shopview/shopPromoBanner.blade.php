@@ -27,7 +27,7 @@
         <div class="col-lg-3 col-md-3 col-6">
             <div class="single_banner">
                 <div class="">
-                    @php $url="/campaign/shop/".$shopId."/Seller Campaign"; @endphp
+                    @php $url="/all/products/shop/".$shopId; @endphp
                     <a href="{{ url($url) }}"><img src="{{ env('SITE_URL').'assets/promo_banner/promoBanner4.jpg'  }}" class="border rounded shadow-sm lazy img-fluid" alt=""></a> 
                 </div>
             </div>
