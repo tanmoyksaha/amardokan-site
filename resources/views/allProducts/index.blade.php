@@ -88,7 +88,7 @@
                                                     <span class="current_price">৳{{ $product->sale_price }}</span>
                                                     <span class="old_price">৳{{ $product->unit_mrp }}</span>
                                                 </div>
-                                                @if($product->stock>1)
+                                                <!-- @if($product->stock>1)
                                                 <div class="price_box"> 
                                                     <span class="current_price font-weight-bold">Available for Delivery</span>
                                                 </div>
@@ -96,9 +96,9 @@
                                                 <div class="price_box"> 
                                                     <span class="current_price font-weight-bold">Only for Preorder</span>
                                                 </div>
-                                                @endif
+                                                @endif -->
                                             </div>
-                                            <div class="product_content grid_content ">
+                                            <!-- <div class="product_content grid_content ">
                                                 <div class="input-group px-4">
                                                     <div class="input-group-prepend">
                                                         <a id="{{$product->store_p_id}}_increment" class="cart-click add-to-cart-qty input-group-text">+</a>
@@ -111,7 +111,7 @@
                                             </div>
                                             <div class="product_content grid_content pb-3">
                                                 <button type="submit" id="{{$product->store_p_id}}_addToCart" class="add-to-cart btn add-to-cart-btn">Add to Cart</button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </form>
                                 </div>

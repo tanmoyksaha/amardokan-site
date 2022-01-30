@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\ProductController;
 
 
 
@@ -57,6 +58,9 @@ Route::get('/campaign/shop/{shopId}/{campaignName}',[CampaignController::class,'
 Route::get('/all/products',[CampaignController::class,'allProducts'])->name('all.products');
 Route::get('/all/products/shop/{shopId}',[CampaignController::class,'shopAllProducts'])->name('all.products.shops');
 
+
+//products
+Route::get('/product/details/{pId}/{shopId}',[ProductController::class,'productDetails'])->name('products.details');
 
 //sell on amardokan
 Route::get('/sellOnAmardokan', function () {

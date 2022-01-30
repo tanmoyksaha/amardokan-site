@@ -172,7 +172,10 @@
                                         <input type="hidden" name="gen_p_id" value="{{$product->store_p_id}}">
                                         <div class="single_product shadow-sm">
                                             <div class="product_thumb">
-                                                <a class="primary_img" href="singleProduct.php">
+                                                @php 
+                                                    $url='/product/details/'.$product->store_p_id.'/'.$shopId
+                                                @endphp
+                                                <a class="primary_img" href="{{ url($url) }}">
                                                     <img src="{{ env('ADMIN_PANEL').'images/products/'.$product->product_id.'-1.jpg' }}" alt="">
                                                 </a>
                                                 <!-- <div class="label_product">

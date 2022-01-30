@@ -126,7 +126,7 @@ class CheckoutController extends Controller
         foreach($cartItems as $item){
             $data=$this->GetOrderItemData($item->id);
 
-            $totalComiision+=$data->commisionAmnt;
+            $totalComiision+=($data->commisionAmnt*$item->qty);
 
             $custId = DB::table('gen_ord_items')->insertGetId(array(
                 'invoice' => $invId,
@@ -135,7 +135,7 @@ class CheckoutController extends Controller
                 'unit_sale' => $data->salePrice,
                 'qty' => $item->qty,
                 'abl_com_percentage' => (($data->commisionAmnt*100)/$data->salePrice),
-                'abl_comission' => $data->commisionAmnt
+                'abl_comission' => $data->commisionAmnt*$item->qty
             ));
         }
 
@@ -152,6 +152,7 @@ class CheckoutController extends Controller
         }
 
         $this->getCartInfo();
+
 
         $url="/checkoutInvoice/".$invId;
         return Redirect::to($url);
