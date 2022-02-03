@@ -70,49 +70,49 @@
                                     <form action="{{ route('gen-add-to-cart')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="gen_p_id" value="{{$product->store_p_id}}">
-                                        <div class="single_product shadow-sm">
-                                            <div class="product_thumb">
-                                                <a class="primary_img" href="singleProduct.php">
+                                        <a href="{{ url('/all/products/'.$product->product_id) }}">
+                                            <div class="single_product shadow">
+                                                <div class="product_thumb">
                                                     <img src="{{ env('ADMIN_PANEL').'images/products/'.$product->product_id.'-1.jpg' }}" alt="">
-                                                </a>
-                                                <!-- <div class="label_product">
-                                                    <span class="label_sale">Sale</span>
-                                                    <span class="label_new">New</span>
+                                                    <!-- <div class="label_product">
+                                                        <span class="label_sale">Sale</span>
+                                                        <span class="label_new">New</span>
+                                                    </div> -->
+                                                </div>
+                                                <div class="product_content grid_content">
+                                                    <a href="singleProduct.php">
+                                                        <h4 class="product_name">{{ $product->product_name }}</h4>
+                                                    </a>
+                                                    <div class="price_box"> 
+                                                        <span class="current_price">৳{{ $product->sale_price }}</span>
+                                                        <span class="old_price">৳{{ $product->unit_mrp }}</span>
+                                                    </div>
+                                                    <!-- @if($product->stock>1)
+                                                    <div class="price_box"> 
+                                                        <span class="current_price font-weight-bold">Available for Delivery</span>
+                                                    </div>
+                                                    @else
+                                                    <div class="price_box"> 
+                                                        <span class="current_price font-weight-bold">Only for Preorder</span>
+                                                    </div>
+                                                    @endif -->
+                                                </div>
+                                                <!-- <div class="product_content grid_content ">
+                                                    <div class="input-group px-4">
+                                                        <div class="input-group-prepend">
+                                                            <a id="{{$product->store_p_id}}_increment" class="cart-click add-to-cart-qty input-group-text">+</a>
+                                                        </div>
+                                                        <input id="{{$product->store_p_id}}" name="pQty" type="number" class="form-control text-center" value="1" readonly>
+                                                        <div class="input-group-append">
+                                                            <a id="{{$product->store_p_id}}_decrement" class="cart-click add-to-cart-qty input-group-text">-</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product_content grid_content pb-3">
+                                                    <button type="submit" id="{{$product->store_p_id}}_addToCart" class="add-to-cart btn add-to-cart-btn">Add to Cart</button>
                                                 </div> -->
                                             </div>
-                                            <div class="product_content grid_content">
-                                                <a href="singleProduct.php">
-                                                    <h4 class="product_name">{{ $product->product_name }}</h4>
-                                                </a>
-                                                <div class="price_box"> 
-                                                    <span class="current_price">৳{{ $product->sale_price }}</span>
-                                                    <span class="old_price">৳{{ $product->unit_mrp }}</span>
-                                                </div>
-                                                <!-- @if($product->stock>1)
-                                                <div class="price_box"> 
-                                                    <span class="current_price font-weight-bold">Available for Delivery</span>
-                                                </div>
-                                                @else
-                                                <div class="price_box"> 
-                                                    <span class="current_price font-weight-bold">Only for Preorder</span>
-                                                </div>
-                                                @endif -->
-                                            </div>
-                                            <!-- <div class="product_content grid_content ">
-                                                <div class="input-group px-4">
-                                                    <div class="input-group-prepend">
-                                                        <a id="{{$product->store_p_id}}_increment" class="cart-click add-to-cart-qty input-group-text">+</a>
-                                                    </div>
-                                                    <input id="{{$product->store_p_id}}" name="pQty" type="number" class="form-control text-center" value="1" readonly>
-                                                    <div class="input-group-append">
-                                                        <a id="{{$product->store_p_id}}_decrement" class="cart-click add-to-cart-qty input-group-text">-</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="product_content grid_content pb-3">
-                                                <button type="submit" id="{{$product->store_p_id}}_addToCart" class="add-to-cart btn add-to-cart-btn">Add to Cart</button>
-                                            </div> -->
-                                        </div>
+                                        </a>
                                     </form>
                                 </div>
                             @endforeach

@@ -35,4 +35,10 @@ class ProductController extends Controller
 
         return view('product.detailsProduct',compact('shopId','products','shopName'));
     }
+
+    public function detailProductAll($pId)
+    {
+        # code...
+        return view('allProducts.detailProduct');
+    }
 }

@@ -61,6 +61,7 @@ Route::get('/all/products/shop/{shopId}',[CampaignController::class,'shopAllProd
 
 //products
 Route::get('/product/details/{pId}/{shopId}',[ProductController::class,'productDetails'])->name('products.details');
+Route::get('/all/products/{pId}',[ProductController::class,'detailProductAll'])->name('all.products.detail');
 
 //sell on amardokan
 Route::get('/sellOnAmardokan', function () {

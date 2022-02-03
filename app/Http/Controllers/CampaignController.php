@@ -52,6 +52,7 @@ class CampaignController extends Controller
 
     public function allProducts(){
         # code...
+        $this->getCartInfo();
         $sql="SELECT store_products.id as store_p_id,
                 products.id as product_id, 
                 store_products.sale_price,
@@ -94,5 +95,23 @@ class CampaignController extends Controller
         
         $products=DB::select($sql);
         return view('allProducts.index',compact('shopName','products'));
+    }
+    public function getCartInfo()
+    {
+        if(Session::get('login')){
+            $cartSql="select count(*) as cart_num from gen_carts where customer_id='".session('u_id')."' and active=1";
+            $cartNum=DB::select($cartSql);
+            $cartInfo['number']=$cartNum[0]->cart_num;
+        }
+        else{
+            $cart=session('cart');
+            if($cart!=null){
+                $cartInfo['number']=count($cart);
+            }
+            else{
+                $cartInfo['number']=0;
+            }
+        }
+        session()->put('cartInfo',$cartInfo);
     }
 }

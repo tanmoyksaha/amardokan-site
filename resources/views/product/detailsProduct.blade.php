@@ -76,7 +76,6 @@
                             </form>
                             <div class="priduct_social">
                                 <ul>
-                                    
                                     <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}" title="facebook"><i class="fa fa-facebook"></i> Share</a></li>               
                                 </ul>      
                             </div>
