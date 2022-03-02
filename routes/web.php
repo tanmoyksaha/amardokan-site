@@ -47,6 +47,7 @@ Route::post('/checkout/final',[CheckoutController::class,'finalCheckout'])->name
 
 //invoice Controller
 Route::get('/checkoutInvoice/{invId}',[InvoiceController::class,'CheckoutInv'])->name('checkoutInv');
+Route::get('/print-invoice/{invId}',[InvoiceController::class,'PrintCheckoutInv'])->name('printCheckoutInv');
 
 //search controller
 Route::post('/shop/search/home',[SearchController::class,'ShopSearchHome'])->name('home.shop.search');

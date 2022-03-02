@@ -11,7 +11,7 @@
                     <div class="breadcrumb_content text-light">
                         <h3><b>{{ $shopName[0]->shop_name }}</b></h3>
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="{{route('home')}}">home</a></li>
                             <li>shop</li>
                         </ul>
                     </div>
@@ -171,36 +171,36 @@
                                         @csrf
                                         <input type="hidden" name="gen_p_id" value="{{$product->store_p_id}}">
                                         <div class="single_product shadow-sm">
-                                            <div class="product_thumb">
-                                                @php 
-                                                    $url='/product/details/'.$product->store_p_id.'/'.$shopId
-                                                @endphp
-                                                <a class="primary_img" href="{{ url($url) }}">
+                                            <!-- start work today -->
+                                            @php 
+                                                $url='/product/details/'.$product->store_p_id.'/'.$shopId
+                                            @endphp
+                                            <a href="{{ url($url) }}">
+                                                <div class="product_thumb">
                                                     <img src="{{ env('ADMIN_PANEL').'images/products/'.$product->product_id.'-1.jpg' }}" alt="">
-                                                </a>
-                                                <!-- <div class="label_product">
-                                                    <span class="label_sale">Sale</span>
-                                                    <span class="label_new">New</span>
-                                                </div> -->
-                                            </div>
-                                            <div class="product_content grid_content">
-                                                <a href="singleProduct.php">
+                                                    <!-- <div class="label_product">
+                                                        <span class="label_sale">Sale</span>
+                                                        <span class="label_new">New</span>
+                                                    </div> -->
+                                                </div>
+                                                <div class="product_content grid_content">
                                                     <h4 class="product_name">{{ $product->product_name }}</h4>
-                                                </a>
-                                                <div class="price_box"> 
-                                                    <span class="current_price">৳{{ $product->sale_price }}</span>
-                                                    <span class="old_price">৳{{ $product->unit_mrp }}</span>
+                                                    <div class="price_box"> 
+                                                        <span class="current_price">৳{{ $product->sale_price }}</span>
+                                                        <span class="old_price">৳{{ $product->unit_mrp }}</span>
+                                                    </div>
+                                                    @if($product->stock>1)
+                                                    <div class="price_box"> 
+                                                        <span class="current_price font-weight-bold">Available for Delivery</span>
+                                                    </div>
+                                                    @else
+                                                    <div class="price_box"> 
+                                                        <span class="current_price font-weight-bold">Only for Preorder</span>
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                                @if($product->stock>1)
-                                                <div class="price_box"> 
-                                                    <span class="current_price font-weight-bold">Available for Delivery</span>
-                                                </div>
-                                                @else
-                                                <div class="price_box"> 
-                                                    <span class="current_price font-weight-bold">Only for Preorder</span>
-                                                </div>
-                                                @endif
-                                            </div>
+                                            </a>
+                                            <!-- end work today -->
                                             <div class="product_content grid_content ">
                                                 <div class="input-group px-4">
                                                     <div class="input-group-prepend">

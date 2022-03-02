@@ -26,23 +26,25 @@
 
                     
                     <div id="menu" class="text-left ">
+                        <!-- start work today -->
                         <ul class="offcanvas_main_menu">
                             <li class="menu-item-has-children active">
-                                <a href="index.php">Home</a>
+                                <a href="{{route('home')}}">Home</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="login.php">login</a>
+                                <a href="{{route('pages.login')}}">login</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="registration.php">Register</a>
+                                <a href="{{route('pages.registration')}}">Register</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="myAccount.php">my account</a>
+                                <a href="{{route('pages.myaccount')}}">my account</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="seller-panel.php">Sell on Amardokan</a>
+                                <a href="{{route('sellOnAmardokan')}}">Sell on Amardokan</a>
                             </li>
                         </ul>
+                        <!-- end work today -->
                     </div>
                     <div class="offcanvas_footer">
                         <!-- <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span> -->

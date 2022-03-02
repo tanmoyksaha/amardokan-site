@@ -25,6 +25,8 @@ class CartController extends Controller
         
         $shopDelCharge=$this->GetDeliveryCharge($cartStoreId);
 
+        $this->getCartInfo();
+
         return view('cart.index',compact('cartItems','cartStoreId','shopDelCharge'));
     }
 

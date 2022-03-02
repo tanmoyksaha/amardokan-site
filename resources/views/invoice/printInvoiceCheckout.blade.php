@@ -1,21 +1,27 @@
-@extends('main.header-footer')
-
-@section('main_content')
-<p id="page_id" hidden>{{$invId}}</p>
-<section class="main_content mb-4">
-    <!--breadcrumbs area start-->
-    <div class="breadcrumbs_area">
-        <div class="container">   
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb_content text-light">
-                        <h3 >Invoice</h3>
-                        <button id="print_invoice" class="btn btn-danger">Print</button>
-                    </div>
-                </div>
-            </div>
-        </div>         
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Voucher</title>
+    <style>
+        @page
+        {
+            size: A4;
+            margin: 0;
+        }
+        @media print {
+                html, body {
+                height:100vh; 
+                margin: 0 !important; 
+                padding: 0 !important;
+                overflow: hidden;
+            }
+        }    
+    </style>
+</head>
+<body>
     <div class="container invoice-invoice border border-primary mt-2">
         <div class="row mt-4 mx-4">
             <div class="col-12">
@@ -175,47 +181,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row mt-4">
-            <div class="col-12 mt-4">
-                <div class="row text-center h4 field-bold">
-                    <div class="col">
-                        <span>Terms & Conditions</span>
-                    </div>
-                </div>
-                <div class="row text-center h6">
-                    <div class="col">
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
-</section>
-@endsection
-
-@section('js')
-    <script>
-
-    $(document).ready(function() {
-        $("#print_invoice").click(function(){
-
-            var invId=$("#page_id").html();
-            // alert(invId);
-            $.get('/print-invoice/'+invId,function(viewContent){
-                document.body.innerHTML=viewContent;
-                    window.print();
-                    setTimeout(function(){
-                        location.reload(true);
-                    }, 500);
-
-                console.log(viewContent);
-            });
-        })
-    });
-
-    </script>
-@endsection
+</body>
+</html>
