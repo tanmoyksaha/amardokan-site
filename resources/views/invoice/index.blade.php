@@ -1,6 +1,7 @@
 @extends('main.header-footer')
 
 @section('main_content')
+<p id="page_id" hidden>{{$invId}}</p>
 <section class="main_content mb-4">
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
@@ -9,7 +10,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_content text-light">
                         <h3 >Invoice</h3>
-                        <button id="print-invoice" class="btn btn-danger">Print</button>
+                        <button id="print_invoice" class="btn btn-danger">Print</button>
                     </div>
                 </div>
             </div>
@@ -194,4 +195,28 @@
     </div>
 
 </section>
+@endsection
+
+
+@section('js')
+    <script>
+
+        $(document).ready(function() {
+            $("#print_invoice").click(function(){
+                // alert("OK");
+                var invId=$("#page_id").html();
+                // alert(invId);
+                $.get('/print-invoice/'+invId,function(viewContent){
+                    document.body.innerHTML=viewContent;
+                        window.print();
+                        setTimeout(function(){
+                            location.reload(true);
+                        }, 500);
+    
+                    console.log(viewContent);
+                });
+            });
+        });
+
+    </script>
 @endsection

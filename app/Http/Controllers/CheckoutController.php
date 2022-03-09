@@ -153,7 +153,6 @@ class CheckoutController extends Controller
 
         $this->getCartInfo();
 
-
         $url="/checkoutInvoice/".$invId;
         return Redirect::to($url);
     }
@@ -173,7 +172,7 @@ class CheckoutController extends Controller
 
         // var_dump($district);
         // var_dump($data);
-        
+        // die;
 
         if($district != $data[0]->district){
             return 0;
