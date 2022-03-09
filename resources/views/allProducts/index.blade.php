@@ -10,9 +10,6 @@
                 <div class="col-12">
                     <div class="breadcrumb_content text-light">
                         <h3><b>All Products</b></h3>
-                        @if(isset($shopName[0]->shop_name))
-                        <h4><b>{{ $shopName[0]->shop_name }}</b></h4>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -24,28 +21,68 @@
     <div class="shop_area mt-30 mb-70">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-12">
+            <div class="col-12 col-md-3">
+                    <!--sidebar widget start-->
+                    <aside class="sidebar_widget">
+                        <div class="widget_inner">
+                            <div class="widget_list widget_categories">
+                                <h3>Category</h3>
+                                <ul>
+                                    @php $count=0; @endphp
+                                    @foreach($catList as $item)
+                                    @php $count++; @endphp
+                                    <li class="widget_sub_categories sub_categories{{$count}}"><a href="javascript:void(0)">{{ $item['parent'] }}</a>
+                                        <ul class="widget_dropdown_categories dropdown_categories{{$count}}">
+                                            
+                                            @foreach($item['child'] as $child)
+                                            
+                                                @php $url='/all/products/category/'.$child['name']; @endphp
+                                                <li><a href="{{ url($url) }}">{{ $child['name'] }}</a></li>
+                                            
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </li>
+                                    @endforeach
+                                    <span class="totalParentCategory" hidden>{{ $count }}</span>
+                                </ul>
+                            </div>
+                            <!-- <div class="widget_list widget_manu">
+                                <h3>Manufacturer</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">Uniliver <span>(6)</span></a> 
+                                    </li>
+                                    <li>
+                                        <a href="#">Acme <span>(10)</span></a> 
+                                    </li>
+                                    <li>
+                                        <a href="#">ACI <span>(4)</span></a> 
+                                    </li>
+                                    <li>
+                                        <a href="#">Square <span>(10)</span></a> 
+                                    </li>                               
+                                </ul>
+                            </div> -->
+
+                        </div>
+                    </aside>
+                    <!--sidebar widget end-->
+                </div>
+                <div class="col-12 col-md-9">
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
-                        <div class=" niceselect_option">
-                            <form class="select_option" action="#">
-                                <select name="orderby" id="short">
-
-                                    <option value="1">Sort by price: low to high</option>
-                                    <option value="2">Sort by price: high to low</option>
-                                </select>
-                            </form>
-                        </div>
-                        <div class="page_amount">
+                        <!-- <div class="page_amount"> -->
                             <div class="col-12 ">
                                 <div class="search_box search_five mobail_s_none">
-                                    <form action="#">
-                                        <input placeholder="Search here..." type="text">
+                                    <form action="{{ route('all.products.src') }}" method="post">
+                                        @csrf
+                                        <input placeholder="Search Products here..." type="text" name="prod_name">
                                         <button type="submit"><span class="lnr lnr-magnifier"></span></button>
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </div>
                     <!--shop toolbar end-->
                     <div class="col-lg-12 col-md-12">
@@ -66,7 +103,7 @@
                         </div>
                         <div class="row shop_wrapper">
                             @foreach($products as $product)
-                                <div class="col-lg-2 col-md-2 col-sm-6 col-6  p-2">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-6  p-2">
                                     <form action="{{ route('gen-add-to-cart')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="gen_p_id" value="{{$product->store_p_id}}">

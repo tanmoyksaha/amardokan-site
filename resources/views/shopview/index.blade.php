@@ -37,72 +37,29 @@
                                     <a href="#"><img class="col-12 img-fluid border border-lg p-2" src="{{ env('ADMIN_PANEL').'images/shop_banner/'.$shopId.'.png' }}" alt=""></a>
                                 </div>
                             </div>
-                            <!-- <div class="widget_list widget_categories">
+                            <div class="widget_list widget_categories">
                                 <h3>Category</h3>
                                 <ul>
-                                    <li class="widget_sub_categories sub_categories1"><a href="javascript:void(0)">Fashion</a>
-                                        <ul class="widget_dropdown_categories dropdown_categories1">
-                                            <li><a href="#">Shoe</a></li>
-                                            <li><a href="#">Jewelry</a></li>
+                                    @php $count=0; @endphp
+                                    @foreach($catList as $item)
+                                    @php $count++; @endphp
+                                    <li class="widget_sub_categories sub_categories{{$count}}"><a href="javascript:void(0)">{{ $item['parent'] }}</a>
+                                        <ul class="widget_dropdown_categories dropdown_categories{{$count}}">
+                                            
+                                            @foreach($item['child'] as $child)
+                                            
+                                                @php $url='/shopView/'.$shopId.'/'.$child['name']; @endphp
+                                                <li><a href="{{ url($url) }}">{{ $child['name'] }}</a></li>
+                                            
+                                            @endforeach
+                                            
                                         </ul>
                                     </li>
-                                    <li class="widget_sub_categories sub_categories2"><a href="javascript:void(0)">Grocery</a>
-                                        <ul class="widget_dropdown_categories dropdown_categories2">
-                                            <li><a href="#">Toilitries</a></li>
-                                            <li><a href="#">Food</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="widget_sub_categories sub_categories3"><a href="javascript:void(0)">Imported</a>
-                                        <ul class="widget_dropdown_categories dropdown_categories3">
-                                            <li><a href="#">Chocklets</a></li>
-                                            <li><a href="#">Cosmatics</a></li>
-                                        </ul>
-                                    </li>
+                                    @endforeach
+                                    <span class="totalParentCategory" hidden>{{ $count }}</span>
                                 </ul>
                             </div>
-                            <div class="widget_list widget_color">
-                                <h3>Select By Color</h3>
-                                <ul>
-                                    <li>
-                                        <a href="#">Black  <span>(6)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#"> Blue <span>(8)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#">Brown <span>(10)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#"> Green <span>(6)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#">Pink <span>(4)</span></a> 
-                                    </li>
-                                  
-                                </ul>
-                            </div>
-                            <div class="widget_list widget_color">
-                                <h3>Select By SIze</h3>
-                                <ul>
-                                    <li>
-                                        <a href="#">S  <span>(6)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#"> M <span>(8)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#">L <span>(10)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#"> XL <span>(6)</span></a> 
-                                    </li>
-                                    <li>
-                                        <a href="#">XLL <span>(4)</span></a> 
-                                    </li>
-                                  
-                                </ul>
-                            </div>
-                            <div class="widget_list widget_manu">
+                            <!-- <div class="widget_list widget_manu">
                                 <h3>Manufacturer</h3>
                                 <ul>
                                     <li>
@@ -127,20 +84,25 @@
                 <div class="col-12 col-md-9">
                     <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
-                        <div class=" niceselect_option">
-                            <form class="select_option" action="#">
-                                <select name="orderby" id="short">
+                        <div class="niceselect_option priceShortSelect">
+                            <!-- <form class="select_option" action="" method="post">
+                                <select class="priceShortSelect" name="orderby" id="short" >
 
                                     <option value="1">Sort by price: low to high</option>
                                     <option value="2">Sort by price: high to low</option>
                                 </select>
-                            </form>
+                            </form> -->
+                            <span>Sort by price:</span>
+                            <a href="{{ url('/shopView/'.$shopId.'/price/ASC') }}" class="btn btn-primary" style="background-color:#082f83;"> low to high</a>
+                            <a href="{{ url('/shopView/'.$shopId.'/price/DESC') }}" class="btn btn-primary" style="background-color:#082f83;">high to low</a>
                         </div>
                         <div class="page_amount">
                             <div class="col-12 ">
                                 <div class="search_box search_five mobail_s_none">
-                                    <form action="#">
-                                        <input placeholder="Search here..." type="text">
+                                    <form action="{{ route('shop.view.searh') }}" method="post">
+                                        @csrf
+                                        <input placeholder="Search here..." type="text" name='src_title'>
+                                        <input type="hidden" name='src_shop' value='{{ $shopId }}'>
                                         <button type="submit"><span class="lnr lnr-magnifier"></span></button>
                                     </form>
                                 </div>
@@ -235,6 +197,7 @@
 <script>
     $(document).ready(function(){
         //cart increment and decrement
+        // alert('OK');
         var cartError=$("#cartErrorInput").val();
         if(cartError>0){
             $("#showErrorModal").modal('show');
@@ -275,7 +238,9 @@
             }
         });
 
-
+        $(".priceShortSelect").click(function(){
+            
+        });
     }); 
 </script>
 @endsection

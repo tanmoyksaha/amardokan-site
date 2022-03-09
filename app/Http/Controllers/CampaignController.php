@@ -50,8 +50,11 @@ class CampaignController extends Controller
         return view('campaign.shopView',compact('shopId','products','campaignName'));
     }
 
+
+
     public function allProducts(){
         # code...
+        $catList=$this->getCategoryList();
         $this->getCartInfo();
         $sql="SELECT store_products.id as store_p_id,
                 products.id as product_id, 
@@ -71,7 +74,7 @@ class CampaignController extends Controller
             GROUP BY product_id";
         
         $products=DB::select($sql);
-        return view('allProducts.index',compact('products'));
+        return view('allProducts.index',compact('products','catList'));
     }
     public function shopAllProducts($shopId){
         # code...
@@ -95,6 +98,104 @@ class CampaignController extends Controller
         
         $products=DB::select($sql);
         return view('allProducts.index',compact('shopName','products'));
+    }
+
+    public function productsByCat($cat)
+    {
+        # code...
+        $catList=$this->getCategoryList();
+        $this->getCartInfo();
+        $sql="SELECT store_products.id as store_p_id,
+                products.id as product_id, 
+                store_products.sale_price,
+                store_products.abl_com_amnt,
+                store_products.stock,
+                store_products.store_enlist,
+                products.title as product_name,
+                products.unit_mrp,
+                products.status as product_status 
+            
+            FROM `store_products`,products 
+            where products.status='active' and 
+            products.sub_category='".$cat."' and 
+            store_products.store_enlist=1 and 
+            store_products.prod_id=products.id
+            
+            GROUP BY product_id";
+        
+        $products=DB::select($sql);
+
+
+        return view('allProducts.index',compact('products','catList'));
+    }
+
+    public function productsBySrc(Request $request)
+    {
+        # code...
+        $url="/all/products/src/name/".$request->prod_name;
+        return redirect($url);
+    }
+
+    public function productsBySrcName($pName)
+    {
+        # code...
+        $catList=$this->getCategoryList();
+        $this->getCartInfo();
+        $sql="SELECT store_products.id as store_p_id,
+                products.id as product_id, 
+                store_products.sale_price,
+                store_products.abl_com_amnt,
+                store_products.stock,
+                store_products.store_enlist,
+                products.title as product_name,
+                products.unit_mrp,
+                products.status as product_status 
+            
+            FROM `store_products`,products 
+            where 
+            products.title LIKE '%".$pName."%' and
+            products.status='active' and 
+            store_products.store_enlist=1 and 
+            store_products.prod_id=products.id
+            
+            GROUP BY product_id";
+        
+        $products=DB::select($sql);
+
+
+        return view('allProducts.index',compact('products','catList'));
+    }
+
+    public function getCategoryList()
+    {
+        # code...
+        $list=array();
+        $sql="SELECT `id`, `name` FROM `category` WHERE `parent_id`=0";
+        $result=DB::select($sql);
+
+        foreach($result as $item){
+            // $pList[$item->name]='';
+            $cCat=array();
+
+            $sql="SELECT `id`, `name` FROM `category` WHERE `parent_id`=$item->id";
+            $result2=DB::select($sql);
+
+            foreach($result2 as $items){
+                $child['id']=$items->id;
+                $child['name']=$items->name;
+
+                array_push($cCat,$child);
+            }
+
+
+            $pList['parent']=$item->name;
+            $pList['child']=$cCat;
+
+
+            array_push($list,$pList);
+        }
+
+        return $list;
     }
     public function getCartInfo()
     {

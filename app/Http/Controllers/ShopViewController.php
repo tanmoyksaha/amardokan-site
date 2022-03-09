@@ -14,6 +14,7 @@ class ShopViewController extends Controller
     {
         
         # code...
+        $catList=$this->getCategoryList();
         $this->getCartInfo();
         $sql="select shop_name from user_seller where id=".$shopId;
         $shopName=DB::select($sql);
@@ -34,7 +35,144 @@ class ShopViewController extends Controller
         store_products.store_id=".$shopId;
 
         $products=DB::select($sql);
-        return view('shopview.index',compact('shopId','products','shopName'));
+        return view('shopview.index',compact('shopId','products','shopName','catList'));
+    }
+
+    public function ShopViewByCategory($shopId,$category)
+    {
+        # code...
+        $catList=$this->getCategoryList();
+        $this->getCartInfo();
+        $sql="select shop_name from user_seller where id=".$shopId;
+        $shopName=DB::select($sql);
+
+        $sql="SELECT store_products.id as store_p_id,
+        products.id as product_id, 
+        store_products.sale_price,
+        store_products.abl_com_amnt,
+        store_products.stock,
+        store_products.store_enlist,
+        products.title as product_name,
+        products.unit_mrp,
+        products.status as product_status 
+        FROM `store_products`,products 
+        where products.status='active' and 
+        products.sub_category='".$category."' and 
+        store_products.store_enlist=1 and 
+        store_products.prod_id=products.id and 
+        store_products.store_id=".$shopId;
+
+
+
+        $products=DB::select($sql);
+        return view('shopview.index',compact('shopId','products','shopName','catList'));
+
+    }
+    public function ShopViewByPrice($shopId,$short)
+    {
+        # code...
+        $catList=$this->getCategoryList();
+        $this->getCartInfo();
+        $sql="select shop_name from user_seller where id=".$shopId;
+        $shopName=DB::select($sql);
+
+        $sql="SELECT store_products.id as store_p_id,
+        products.id as product_id, 
+        store_products.sale_price,
+        store_products.abl_com_amnt,
+        store_products.stock,
+        store_products.store_enlist,
+        products.title as product_name,
+        products.unit_mrp,
+        products.status as product_status 
+        FROM `store_products`,products 
+        where products.status='active' and 
+        store_products.store_enlist=1 and 
+        store_products.prod_id=products.id and 
+        store_products.store_id=".$shopId."
+        
+        ORDER BY store_products.sale_price ".$short 
+        ;
+
+
+        // var_dump($sql);
+        // die;
+
+        $products=DB::select($sql);
+        return view('shopview.index',compact('shopId','products','shopName','catList'));
+
+    }
+    public function ShopViewBySearch(Request $request)
+    {
+        # code...
+
+        $url="/shopView/".$request->src_shop."/search/".$request->src_title;
+        return redirect($url);
+
+    }
+    public function ShopViewBySrcProduct($shopId,$pName)
+    {
+        # code...
+
+
+        $catList=$this->getCategoryList();
+        $this->getCartInfo();
+        $sql="select shop_name from user_seller where id=".$shopId;
+        $shopName=DB::select($sql);
+
+        $sql="SELECT store_products.id as store_p_id,
+        products.id as product_id, 
+        store_products.sale_price,
+        store_products.abl_com_amnt,
+        store_products.stock,
+        store_products.store_enlist,
+        products.title as product_name,
+        products.unit_mrp,
+        products.status as product_status 
+        FROM `store_products`,products 
+        where 
+        products.title LIKE '%".$pName."%' and
+        products.status='active' and 
+        store_products.store_enlist=1 and 
+        store_products.prod_id=products.id and 
+        store_products.store_id=".$shopId
+        ;
+
+
+        $products=DB::select($sql);
+        return view('shopview.index',compact('shopId','products','shopName','catList'));
+
+    }
+    public function getCategoryList()
+    {
+        # code...
+        $list=array();
+        $sql="SELECT `id`, `name` FROM `category` WHERE `parent_id`=0";
+        $result=DB::select($sql);
+
+        foreach($result as $item){
+            // $pList[$item->name]='';
+            $cCat=array();
+
+            $sql="SELECT `id`, `name` FROM `category` WHERE `parent_id`=$item->id";
+            $result2=DB::select($sql);
+
+            foreach($result2 as $items){
+                $child['id']=$items->id;
+                $child['name']=$items->name;
+
+                array_push($cCat,$child);
+            }
+
+
+            $pList['parent']=$item->name;
+            $pList['child']=$cCat;
+
+
+            array_push($list,$pList);
+        }
+
+        return $list;
     }
     public function getCartInfo()
     {

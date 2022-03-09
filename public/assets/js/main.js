@@ -637,17 +637,23 @@
     });
     
     
+	var totalCat=$('.totalParentCategory').text();
+
+	
     /*---categories slideToggle---*/
     $(".categories_title").on("click", function() {
         $(this).toggleClass('active');
         $('.categories_menu_toggle').slideToggle('medium');
     }); 
 
-    /*---widget sub categories---*/
-    $(".sub_categories1 > a").on("click", function() {
-        $(this).toggleClass('active');
-        $('.dropdown_categories1').slideToggle('medium');
-    }); 
+	for(let i=1;i<=totalCat;i++){
+		/*---widget sub categories---*/
+		$(".sub_categories"+i+" > a").on("click", function() {
+			$(this).toggleClass('active');
+			$('.dropdown_categories'+i).slideToggle('medium');
+		}); 
+	}
+    
     
     /*---widget sub categories---*/
     $(".sub_categories2 > a").on("click", function() {
