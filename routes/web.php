@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 use App\Http\Controllers\LoginRegController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ProductController;
+use App\Mail\WelcomeMail;
 
 
 
@@ -76,3 +79,10 @@ Route::get('/all/products/src/{pId}',[ProductController::class,'detailProductAll
 Route::get('/sellOnAmardokan', function () {
     return view('sellOnAmardokan.index');
 })->name('sellOnAmardokan');
+
+
+//Example Mail
+Route::get('/email',function(){
+    Mail::to('dbsl.tanmoy@gmail.com')->send(new WelcomeMail());
+    return new WelcomeMail();
+});
